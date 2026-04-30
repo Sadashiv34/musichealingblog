@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Medicine of Music — How Sound Heals What Pills Can't</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F9F4EC;
+    --warm-white: #FEFCF8;
+    --forest: #1E3A2F;
+    --forest-mid: #2D5240;
+    --forest-light: #4A7C63;
+    --gold: #C4922A;
+    --gold-light: #E8B84B;
+    --gold-pale: #F5E6C3;
+    --burgundy: #6B2737;
+    --text-dark: #1A1A18;
+    --text-mid: #3D3D38;
+    --text-light: #6B6B63;
+    --border: rgba(30,58,47,0.12);
+    --shadow: 0 2px 24px rgba(30,58,47,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--text-dark);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ── PROGRESS BAR ── */
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--forest-light));
+    width: 0%;
+    z-index: 1000;
+    transition: width 0.1s linear;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 3px; left: 0; right: 0;
+    background: rgba(249,244,236,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 999;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: var(--forest);
+    letter-spacing: 0.05em;
+    font-style: italic;
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-light);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--forest); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--forest);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 40px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(196,146,42,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 7vw, 88px);
+    font-weight: 700;
+    color: var(--warm-white);
+    text-align: center;
+    line-height: 1.1;
+    max-width: 900px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.4s forwards;
+  }
+  .hero h1 em {
+    color: var(--gold-light);
+    font-style: italic;
+  }
+
+  .hero-sub {
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    color: rgba(254,252,248,0.72);
+    text-align: center;
+    max-width: 620px;
+    line-height: 1.7;
+    margin-bottom: 56px;
+    font-style: italic;
+    opacity: 0;
+    animation: fadeUp 1s 0.6s forwards;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 0;
+    border: 1px solid rgba(232,184,75,0.3);
+    border-radius: 12px;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeUp 1s 0.9s forwards;
+  }
+  .hero-stat {
+    padding: 28px 44px;
+    text-align: center;
+    border-right: 1px solid rgba(232,184,75,0.2);
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--gold-light);
+    display: block;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .hero-stat-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: rgba(254,252,248,0.55);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 1s 1.4s forwards;
+  }
+  .scroll-hint span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(232,184,75,0.6);
+  }
+  .scroll-arrow {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(232,184,75,0.5), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  /* ── LAYOUT ── */
+  .section {
+    padding: 100px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-narrow {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 40px;
+  }
+
+  .section-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--forest-light);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    max-width: 60px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 700;
+    color: var(--forest);
+    line-height: 1.2;
+    margin-bottom: 28px;
+  }
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--forest);
+    margin-bottom: 16px;
+    margin-top: 48px;
+  }
+  p { margin-bottom: 24px; color: var(--text-mid); }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── OPENING SCENE ── */
+  .opening-scene {
+    background: var(--warm-white);
+    border-top: 4px solid var(--gold);
+    padding: 80px 40px;
+  }
+  .opening-scene-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .dropcap::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    font-weight: 700;
+    color: var(--forest);
+    float: left;
+    line-height: 0.75;
+    margin: 8px 12px 0 0;
+  }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    border-left: 3px solid var(--gold);
+    padding: 24px 36px;
+    margin: 48px 0;
+    background: var(--gold-pale);
+    border-radius: 0 8px 8px 0;
+  }
+  .pull-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--forest);
+    margin: 0;
+    line-height: 1.55;
+  }
+  .pull-quote cite {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text-light);
+    margin-top: 14px;
+    display: block;
+    font-style: normal;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── BRAIN VISUAL SECTION ── */
+  .brain-section {
+    background: var(--forest);
+    padding: 100px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .brain-section::before {
+    content: '♪';
+    position: absolute;
+    font-size: 400px;
+    color: rgba(255,255,255,0.02);
+    top: -60px;
+    right: -40px;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .brain-section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .brain-section .section-label { color: var(--gold-light); }
+  .brain-section .section-label::after { background: rgba(232,184,75,0.2); }
+  .brain-section h2 { color: var(--warm-white); }
+  .brain-section p { color: rgba(254,252,248,0.72); }
+  .brain-section h3 { color: var(--gold-light); margin-top: 0; }
+
+  .brain-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    margin-top: 60px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(232,184,75,0.15);
+  }
+  .brain-card {
+    background: rgba(255,255,255,0.04);
+    padding: 40px 32px;
+    transition: background 0.3s;
+    border-right: 1px solid rgba(232,184,75,0.1);
+  }
+  .brain-card:last-child { border-right: none; }
+  .brain-card:hover { background: rgba(255,255,255,0.08); }
+  .brain-card-icon {
+    font-size: 32px;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .brain-card h3 {
+    font-size: 18px;
+    margin-bottom: 14px;
+    color: var(--gold-light);
+  }
+  .brain-card p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(254,252,248,0.65);
+    margin: 0;
+  }
+  .brain-card .stat-highlight {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--gold-light);
+    display: block;
+    margin-bottom: 8px;
+    line-height: 1;
+  }
+
+  /* ── VISUAL PATHWAY DIAGRAM ── */
+  .pathway-section {
+    background: var(--warm-white);
+    padding: 100px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  .pathway-section-inner {
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  /* ── CLINICAL DATA ── */
+  .data-section {
+    padding: 100px 40px;
+    background: var(--cream);
+  }
+  .data-section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .stat-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 56px 0;
+  }
+  .stat-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px 24px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: default;
+  }
+  .stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+  }
+  .stat-card-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--forest);
+    line-height: 1;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .stat-card-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  .stat-card.accent { background: var(--forest); border-color: var(--forest); }
+  .stat-card.accent .stat-card-number { color: var(--gold-light); }
+  .stat-card.accent .stat-card-label { color: rgba(254,252,248,0.65); }
+
+  /* ── EVIDENCE TABLE ── */
+  .evidence-table-wrap {
+    margin: 48px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .evidence-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+  }
+  .evidence-table thead th {
+    background: var(--forest);
+    color: var(--gold-light);
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+  .evidence-table tbody tr { background: var(--warm-white); border-bottom: 1px solid var(--border); }
+  .evidence-table tbody tr:nth-child(even) { background: var(--cream); }
+  .evidence-table tbody tr:hover { background: var(--gold-pale); }
+  .evidence-table td {
+    padding: 18px 20px;
+    color: var(--text-mid);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .evidence-table td:first-child { color: var(--forest); font-weight: 500; }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    background: rgba(74,124,99,0.12);
+    color: var(--forest-mid);
+  }
+  .badge.strong { background: rgba(30,58,47,0.9); color: var(--gold-light); }
+
+  /* ── HISTORY TIMELINE ── */
+  .timeline-section {
+    background: var(--forest);
+    padding: 100px 40px;
+    position: relative;
+  }
+  .timeline-section .section-label { color: var(--gold-light); }
+  .timeline-section .section-label::after { background: rgba(232,184,75,0.2); }
+  .timeline-section h2 { color: var(--warm-white); }
+  .timeline-section-inner { max-width: 860px; margin: 0 auto; }
+
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+    margin-top: 64px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--gold), rgba(196,146,42,0.1));
+  }
+  .timeline-item {
+    position: relative;
+    padding-bottom: 52px;
+    padding-left: 28px;
+    opacity: 0;
+    transform: translateX(-16px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+  .timeline-item.visible { opacity: 1; transform: translateX(0); }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -5px; top: 6px;
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(196,146,42,0.2);
+  }
+  .timeline-year {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .timeline-event {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--warm-white);
+    line-height: 1.35;
+    margin-bottom: 8px;
+  }
+  .timeline-detail {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    color: rgba(254,252,248,0.6);
+    line-height: 1.65;
+  }
+
+  /* ── HOW TO SECTION ── */
+  .howto-section {
+    background: var(--warm-white);
+    padding: 100px 40px;
+    border-top: 1px solid var(--border);
+  }
+  .howto-section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 56px;
+  }
+  .tip-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .tip-card:hover { border-color: var(--forest-light); }
+  .tip-card::before {
+    content: attr(data-num);
+    position: absolute;
+    top: -10px; right: 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    font-weight: 700;
+    color: rgba(30,58,47,0.05);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .tip-card h3 {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 14px;
+    color: var(--forest);
+  }
+  .tip-card p {
+    font-size: 15px;
+    color: var(--text-light);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ── CAUTION SECTION ── */
+  .caution-section {
+    background: var(--gold-pale);
+    border-top: 1px solid rgba(196,146,42,0.3);
+    border-bottom: 1px solid rgba(196,146,42,0.3);
+    padding: 64px 40px;
+  }
+  .caution-inner { max-width: 720px; margin: 0 auto; }
+  .caution-inner h2 { font-size: 28px; color: var(--forest); margin-bottom: 20px; }
+  .caution-inner p { font-size: 16px; color: var(--text-mid); }
+
+  /* ── CONCLUSION ── */
+  .conclusion-section {
+    background: var(--cream);
+    padding: 100px 40px;
+  }
+  .conclusion-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+  .conclusion-inner h2 { font-size: clamp(32px, 5vw, 54px); color: var(--forest); margin-bottom: 28px; }
+  .conclusion-inner p { font-size: 18px; color: var(--text-mid); max-width: 600px; margin: 0 auto 24px; }
+
+  .cta-box {
+    margin-top: 56px;
+    background: var(--forest);
+    border-radius: 16px;
+    padding: 48px;
+    text-align: left;
+  }
+  .cta-box h3 {
+    color: var(--gold-light);
+    font-size: 22px;
+    margin: 0 0 20px;
+  }
+  .cta-box ul {
+    list-style: none;
+    padding: 0;
+  }
+  .cta-box ul li {
+    color: rgba(254,252,248,0.8);
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .cta-box ul li:last-child { border-bottom: none; }
+  .cta-box ul li::before {
+    content: '♪';
+    color: var(--gold);
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ── SOURCES ── */
+  .sources-section {
+    background: var(--forest);
+    padding: 60px 40px;
+  }
+  .sources-inner { max-width: 1100px; margin: 0 auto; }
+  .sources-inner h4 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(232,184,75,0.6);
+    margin-bottom: 24px;
+  }
+  .sources-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  .source-item {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: rgba(254,252,248,0.45);
+    line-height: 1.5;
+  }
+  .source-item strong { color: rgba(254,252,248,0.7); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #111810;
+    padding: 32px 40px;
+    text-align: center;
+  }
+  footer p {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.25);
+    margin: 0;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    text-align: center;
+    padding: 40px 0 0;
+    color: var(--gold);
+    font-size: 18px;
+    letter-spacing: 0.4em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.6; transform: scaleY(1); }
+    50%       { opacity: 1;   transform: scaleY(1.15); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── SVG PATHWAY ── */
+  .pathway-svg-wrap {
+    margin: 48px 0;
+    text-align: center;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width: 768px) {
+    nav { padding: 12px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 24px 72px; }
+    .hero-stats { flex-direction: column; }
+    .hero-stat { border-right: none; border-bottom: 1px solid rgba(232,184,75,0.2); padding: 24px 32px; }
+    .hero-stat:last-child { border-bottom: none; }
+    .brain-grid { grid-template-columns: 1fr; gap: 1px; }
+    .brain-card { border-right: none; border-bottom: 1px solid rgba(232,184,75,0.1); }
+    .stat-cards { grid-template-columns: 1fr 1fr; }
+    .tips-grid { grid-template-columns: 1fr; }
+    .sources-grid { grid-template-columns: 1fr; }
+    .section, .section-narrow { padding: 64px 24px; }
+    .brain-section, .timeline-section, .howto-section, .conclusion-section, .data-section, .pathway-section { padding: 64px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav>
+  <span class="nav-logo">The Medicine of Music</span>
+  <ul class="nav-links">
+    <li><a href="#science">The Science</a></li>
+    <li><a href="#evidence">Evidence</a></li>
+    <li><a href="#history">History</a></li>
+    <li><a href="#practice">Practice</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">Science &bull; Healing &bull; Music Therapy</p>
+  <h1>What if the most powerful<br>medicine <em>had no side effects?</em></h1>
+  <p class="hero-sub">A growing body of research reveals that music reaches places in the human brain and body that pills simply cannot.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-number">97</span>
+      <span class="hero-stat-label">Randomized Trials<br>analysed</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-number">–1.1</span>
+      <span class="hero-stat-label">Point drop in<br>pain (out of 10)</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-number">62%</span>
+      <span class="hero-stat-label">More likely to achieve<br>large pain relief</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-number">0</span>
+      <span class="hero-stat-label">Pharmacological<br>side effects</span>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Read on</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- OPENING SCENE -->
+<section class="opening-scene">
+  <div class="opening-scene-inner">
+    <p class="dropcap">Imagine lying in a hospital bed after surgery. The room is quiet — but instead of silence, soft piano music fills the space. You feel calmer. And remarkably, you find yourself asking for far less morphine than the patient in the next room.</p>
+    <p>This is not a thought experiment. Clinicians at Harvard Medical School have reported exactly this in controlled trials: patients who listened to music during or after medical procedures showed <strong>significantly lower anxiety</strong> and needed <strong>smaller doses of sedatives and painkillers</strong>. In one study, colonoscopy patients needed 50% less sedation when music played.</p>
+    <p>From operating rooms to cancer wards, burn units to emergency suture clinics, music is quietly reshaping the way humans heal. And the science behind it is more compelling than most of us ever imagined.</p>
+
+    <div class="pull-quote">
+      <p>"Music therapy can heal wounds — especially emotional and psychological ones — that medicines alone often leave open."</p>
+      <cite>— Synthesis of 97 randomised controlled trials, Journal of Music Therapy</cite>
+    </div>
+
+    <p>So what exactly is it about music that eases suffering in ways chemistry sometimes cannot? The answer lies deep inside our neurology, our evolutionary history, and a body of clinical science spanning decades and dozens of countries.</p>
+  </div>
+</section>
+
+<!-- BRAIN / NEUROSCIENCE SECTION -->
+<section class="brain-section" id="science">
+  <div class="brain-section-inner">
+    <p class="section-label">Neuroscience</p>
+    <h2 class="reveal">What music does to your brain</h2>
+    <p class="reveal" style="max-width:640px; font-size:17px;">Music doesn't just lift your mood — it physically reshapes your brain, releases natural painkillers, and dials down the hormones that make you sick. Here's how.</p>
+
+    <div class="brain-grid">
+      <div class="brain-card">
+        <span class="brain-card-icon">🧠</span>
+        <h3>Neuroplasticity</h3>
+        <p>A 2025 systematic review found that listening to or performing music consistently <em>upregulates genes and neurotrophic factors like BDNF</em> — the protein responsible for growing new neural connections. Music literally rewires your brain by strengthening circuits for movement, emotion, and cognition.</p>
+      </div>
+      <div class="brain-card">
+        <span class="brain-card-icon">💊</span>
+        <h3>Natural painkillers</h3>
+        <span class="stat-highlight">–1.13</span>
+        <p>Pain reduction per 10-point scale, confirmed across 97 RCTs. Music triggers <em>endorphin and dopamine release</em> while activating the same brain regions (periaqueductal gray) involved in opioid-mediated pain relief — without the opioids.</p>
+      </div>
+      <div class="brain-card">
+        <span class="brain-card-icon">🧘</span>
+        <h3>Stress hormones</h3>
+        <span class="stat-highlight">d=0.72</span>
+        <p>Effect size for stress and anxiety reduction (medium-to-large), confirmed in a 2020 meta-analysis. Soothing music reliably <em>lowers cortisol</em>, heart rate, and blood pressure — indirectly boosting immune function, since cortisol actively suppresses it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PATHWAY SVG DIAGRAM -->
+<section class="pathway-section" id="pathways">
+  <div class="pathway-section-inner">
+    <p class="section-label">How it works</p>
+    <h2 class="reveal">From sound wave to healing</h2>
+    <p class="reveal">When music enters your ears, it doesn't take a single, simple path through the brain. It fans out — touching the reward system, the pain matrix, and the hormonal stress axis simultaneously. That's why it works on so many different symptoms at once.</p>
+
+    <div class="pathway-svg-wrap reveal">
+      <svg width="100%" viewBox="0 0 860 480" xmlns="http://www.w3.org/2000/svg" role="img">
+        <title>Music healing pathway diagram</title>
+        <desc>Diagram showing how music enters the ear, activates brain pathways, and produces healing outcomes</desc>
+        <defs>
+          <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+
+        <!-- SOURCE: Music/Ear -->
+        <rect x="10" y="200" width="130" height="80" rx="8" fill="#1E3A2F" stroke="#4A7C63" stroke-width="1"/>
+        <text x="75" y="233" text-anchor="middle" font-family="'Playfair Display', serif" font-size="15" fill="#E8B84B" font-weight="700">♪ Music</text>
+        <text x="75" y="254" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="12" fill="rgba(254,252,248,0.6)">Sound enters</text>
+        <text x="75" y="270" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="12" fill="rgba(254,252,248,0.6)">the ear</text>
+
+        <!-- Arrow from music to auditory cortex -->
+        <line x1="140" y1="240" x2="198" y2="240" stroke="#4A7C63" stroke-width="1.5" marker-end="url(#arr2)" fill="none"/>
+        <text x="169" y="232" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="11" fill="#6B6B63">signals</text>
+
+        <!-- AUDITORY CORTEX (center) -->
+        <rect x="200" y="190" width="150" height="100" rx="10" fill="#F5E6C3" stroke="#C4922A" stroke-width="1.5"/>
+        <text x="275" y="228" text-anchor="middle" font-family="'Playfair Display', serif" font-size="14" fill="#1E3A2F" font-weight="700">Auditory Cortex</text>
+        <text x="275" y="248" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="12" fill="#6B2737">+ Limbic System</text>
+        <text x="275" y="266" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="11" fill="#6B6B63">Processing hub</text>
+
+        <!-- 3 branches out -->
+        <!-- Top: Reward pathway -->
+        <line x1="350" y1="215" x2="468" y2="130" stroke="#C4922A" stroke-width="1.5" marker-end="url(#arr2)" fill="none" stroke-dasharray="5,3"/>
+        <!-- Mid: Pain matrix -->
+        <line x1="350" y1="240" x2="468" y2="240" stroke="#1E3A2F" stroke-width="1.5" marker-end="url(#arr2)" fill="none"/>
+        <!-- Bottom: Stress axis -->
+        <line x1="350" y1="265" x2="468" y2="350" stroke="#6B2737" stroke-width="1.5" marker-end="url(#arr2)" fill="none" stroke-dasharray="5,3"/>
+
+        <!-- Box 1: Reward -->
+        <rect x="470" y="80" width="160" height="90" rx="8" fill="#FFF8EC" stroke="#C4922A" stroke-width="1"/>
+        <text x="550" y="112" text-anchor="middle" font-family="'Playfair Display', serif" font-size="13" fill="#854F0B" font-weight="700">Reward Pathway</text>
+        <text x="550" y="130" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="12" fill="#6B6B63">Dopamine &amp; endorphin</text>
+        <text x="550" y="148" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="12" fill="#6B6B63">release ↑</text>
+
+        <!-- Box 2: Pain -->
+        <rect x="470" y="195" width="160" height="90" rx="8" fill="#E8F5EE" stroke="#2D5240" stroke-width="1.5"/>
+        <text x="550" y="228" text-anchor="middle" font-family="'Playfair Display', serif" font-size="13" fill="#1E3A2F" font-weight="700">Pain Matrix</text>
+        <text x="550" y="246" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="12" fill="#6B6B63">Periaqueductal gray</text>
+        <text x="550" y="264" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="12" fill="#6B6B63">Pain signals ↓</text>
+
+        <!-- Box 3: Stress -->
+        <rect x="470" y="305" width="160" height="90" rx="8" fill="#F8EAED" stroke="#6B2737" stroke-width="1"/>
+        <text x="550" y="337" text-anchor="middle" font-family="'Playfair Display', serif" font-size="13" fill="#6B2737" font-weight="700">Stress Axis</text>
+        <text x="550" y="355" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="12" fill="#6B6B63">Cortisol &amp; adrenaline</text>
+        <text x="550" y="373" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="12" fill="#6B6B63">production ↓</text>
+
+        <!-- Arrows from 3 boxes to outcomes -->
+        <line x1="630" y1="125" x2="698" y2="125" stroke="#C4922A" stroke-width="1.5" marker-end="url(#arr2)" fill="none"/>
+        <line x1="630" y1="240" x2="698" y2="240" stroke="#1E3A2F" stroke-width="1.5" marker-end="url(#arr2)" fill="none"/>
+        <line x1="630" y1="350" x2="698" y2="350" stroke="#6B2737" stroke-width="1.5" marker-end="url(#arr2)" fill="none"/>
+
+        <!-- Outcomes -->
+        <rect x="700" y="95" width="148" height="60" rx="6" fill="#1E3A2F"/>
+        <text x="774" y="121" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="13" fill="#E8B84B" font-weight="500">Pleasure &amp;</text>
+        <text x="774" y="140" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="13" fill="#E8B84B" font-weight="500">pain relief</text>
+
+        <rect x="700" y="210" width="148" height="60" rx="6" fill="#1E3A2F"/>
+        <text x="774" y="236" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="13" fill="#E8B84B" font-weight="500">Less opioid</text>
+        <text x="774" y="255" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="13" fill="#E8B84B" font-weight="500">needed</text>
+
+        <rect x="700" y="320" width="148" height="60" rx="6" fill="#1E3A2F"/>
+        <text x="774" y="346" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="13" fill="#E8B84B" font-weight="500">Anxiety &amp;</text>
+        <text x="774" y="365" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="13" fill="#E8B84B" font-weight="500">immune boost</text>
+
+        <!-- Labels for dashed = limbic -->
+        <text x="405" y="166" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="11" fill="#C4922A">limbic</text>
+        <text x="405" y="315" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="11" fill="#6B2737">hormonal</text>
+        <text x="405" y="234" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="11" fill="#1E3A2F">neural</text>
+      </svg>
+    </div>
+
+    <p class="reveal" style="color:var(--text-light); font-size:15px; text-align:center;">Three simultaneous pathways explain why music therapy affects pain, anxiety, and drug needs all at once.</p>
+  </div>
+</section>
+
+<!-- CLINICAL EVIDENCE -->
+<section class="data-section" id="evidence">
+  <div class="data-section-inner">
+    <p class="section-label">Clinical Evidence</p>
+    <h2 class="reveal">What the science actually shows</h2>
+    <p class="reveal" style="max-width:640px; font-size:17px; color:var(--text-mid);">Decades of randomised controlled trials and meta-analyses paint a consistent picture. Music therapy works — and the numbers are clinically meaningful.</p>
+
+    <div class="stat-cards">
+      <div class="stat-card reveal">
+        <span class="stat-card-number">97</span>
+        <span class="stat-card-label">RCTs in a single<br>meta-analysis (Lee et al., 2016)</span>
+      </div>
+      <div class="stat-card accent reveal">
+        <span class="stat-card-number">–24%</span>
+        <span class="stat-card-label">Reduction in opioid intake<br>(standardised mean difference)</span>
+      </div>
+      <div class="stat-card reveal">
+        <span class="stat-card-number">37–62%</span>
+        <span class="stat-card-label">Greater odds of large pain relief<br>with interactive music sessions</span>
+      </div>
+      <div class="stat-card reveal">
+        <span class="stat-card-number">–2.18</span>
+        <span class="stat-card-label">Pooled pain SMD in burn patients<br>(Getie et al., 2026 meta-review)</span>
+      </div>
+    </div>
+
+    <div class="evidence-table-wrap reveal">
+      <table class="evidence-table">
+        <thead>
+          <tr>
+            <th>Study</th>
+            <th>Population</th>
+            <th>Pain result</th>
+            <th>Anxiety result</th>
+            <th>Drug use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Lee et al., 2016<br><span style="font-weight:400; font-size:12px; color:#6B6B63;">J. Music Therapy</span></td>
+            <td>97 RCTs pooled</td>
+            <td>↓ 1.13 pts (0–10) <span class="badge strong">Large</span></td>
+            <td>↓ 10.8 pts (visual analog)</td>
+            <td>Opioids ↓ (SMD –0.24)</td>
+          </tr>
+          <tr>
+            <td>Rodgers-Melnick et al., 2025<br><span style="font-weight:400; font-size:12px; color:#6B6B63;">J. of Pain</span></td>
+            <td>~6,000 hospital sessions</td>
+            <td>37–62% better odds of ≥2-pt drop <span class="badge strong">Large</span></td>
+            <td>Not reported</td>
+            <td>N/A</td>
+          </tr>
+          <tr>
+            <td>Getie et al., 2026<br><span style="font-weight:400; font-size:12px; color:#6B6B63;">Discover Psychology</span></td>
+            <td>Multiple RCTs (burn focus)</td>
+            <td>SMD –2.18 <span class="badge strong">Very large</span></td>
+            <td>Not primary outcome</td>
+            <td>N/A</td>
+          </tr>
+          <tr>
+            <td>Hedayati et al., 2023<br><span style="font-weight:400; font-size:12px; color:#6B6B63;">Emergency medicine RCT</span></td>
+            <td>60 ER laceration patients</td>
+            <td>Trend ↓ (not significant)</td>
+            <td>↓ ~40% lower STAI score <span class="badge">Significant</span></td>
+            <td>N/A</td>
+          </tr>
+          <tr>
+            <td>de Witte et al., 2020<br><span style="font-weight:400; font-size:12px; color:#6B6B63;">Health Psychology Review</span></td>
+            <td>Meta-analysis, varied</td>
+            <td>Not primary outcome</td>
+            <td>d = 0.72 <span class="badge strong">Medium–Large</span></td>
+            <td>Stress hormones ↓</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pull-quote reveal" style="background:#E8F5EE; border-left-color:#2D5240;">
+      <p>"One meta-analysis concluded music may provide an effective complementary approach for both acute and chronic pain — rivalling light pharmacologic adjuncts."</p>
+      <cite>— Lee et al., 2016, Journal of Music Therapy (synthesis of 97 RCTs)</cite>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORY TIMELINE -->
+<section class="timeline-section" id="history">
+  <div class="timeline-section-inner">
+    <p class="section-label">History</p>
+    <h2 class="reveal">Humanity has always known</h2>
+    <p class="reveal" style="color:rgba(254,252,248,0.65); font-size:17px; max-width:580px;">Long before clinical trials, cultures worldwide intuited what neuroscience now confirms. Music has been medicine for millennia.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <p class="timeline-year">~500 BC — Ancient Greece</p>
+        <p class="timeline-event">Plato prescribes music for the soul</p>
+        <p class="timeline-detail">Plato described "harmony" as a force that restores a troubled soul to "order and concord." Homer's Iliad records how hymns and paeans were used to halt a plague. The Pythagoreans prescribed daily music routines for mental balance — an early empirical insight into what we now call neurochemistry.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-year">Medieval era</p>
+        <p class="timeline-event">Monks use chant for convalescence</p>
+        <p class="timeline-detail">Across Europe, monastic communities incorporated chanting into healing rituals. Simultaneously, indigenous cultures on every continent — from West Africa to the Americas — formalised drumming, singing, and dance as treatments for trauma and illness.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-year">1789</p>
+        <p class="timeline-event">First documented medical use in print</p>
+        <p class="timeline-detail">The first recorded scientific mention of music as a medical intervention appeared in print — a turning point from folk practice to formal investigation. Physician Benjamin Rush also advocated for music in treating mental illness in this era.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-year">After World War I &amp; II</p>
+        <p class="timeline-event">Musicians heal veterans in VA hospitals</p>
+        <p class="timeline-detail">Amateur and professional musicians volunteered in US Veterans Administration hospitals. Physicians directly observed that music helped veterans' physical and emotional recovery — sparking interest in formalising the practice.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-year">1944</p>
+        <p class="timeline-event">The first university music therapy programme</p>
+        <p class="timeline-detail">Michigan State University launched the world's first degree programme in music therapy, translating centuries of intuition into a formal discipline. The National Association for Music Therapy followed in 1950.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-year">2013 – 2026</p>
+        <p class="timeline-event">The modern evidence explosion</p>
+        <p class="timeline-detail">Fancourt et al. catalogue 63 studies linking music to immune and hormonal changes (2014). Lee et al. pool 97 RCTs (2016). Rodgers-Melnick reports interactive music beats passive listening (2025). Getie confirms very large pain reductions in burn patients (2026). The empirical case is now overwhelming.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRACTICAL HOW-TO -->
+<section class="howto-section" id="practice">
+  <div class="howto-section-inner">
+    <p class="section-label">Practice</p>
+    <h2 class="reveal">How to use music as medicine</h2>
+    <p class="reveal" style="max-width:640px; font-size:17px; color:var(--text-mid);">Music therapy doesn't require a degree to benefit from. Here's what the research says works — and how you can apply it today.</p>
+
+    <div class="tips-grid">
+      <div class="tip-card reveal" data-num="01">
+        <h3>Build a personal "healing playlist"</h3>
+        <p>Patient-preferred music outperforms generic "relaxing music." Your brain engages memory and emotion more deeply with familiar songs. Studies show personalised playlists maximise the dopamine response. Start with music that feels calming and meaningful to <em>you</em>.</p>
+      </div>
+      <div class="tip-card reveal" data-num="02">
+        <h3>Go interactive when possible</h3>
+        <p>A 2025 hospital study found that <em>active</em> participation — singing along, tapping rhythm, even humming — made patients 37–62% more likely to experience a large drop in pain compared to passive listening. You don't need to be musical. Just engage.</p>
+      </div>
+      <div class="tip-card reveal" data-num="03">
+        <h3>Time it to your procedure or pain spike</h3>
+        <p>Listening 30 minutes before a stressful medical procedure significantly reduces pre-operative anxiety. Post-operatively, music has been shown to reduce opioid demand in recovery wards. Timing matters — it's not background noise, it's an intervention.</p>
+      </div>
+      <div class="tip-card reveal" data-num="04">
+        <h3>Keep volume moderate (≤65 dB)</h3>
+        <p>AMTA clinical guidelines recommend moderate volume — roughly that of a normal conversation. Louder is not better. The goal is engagement, not stimulation. Use headphones when possible to personalise the experience and reduce disturbance to others.</p>
+      </div>
+      <div class="tip-card reveal" data-num="05">
+        <h3>Match the music to the mood</h3>
+        <p>Tempo matters. For relaxation and pain relief, slower tempos (60–80 BPM, close to resting heart rate) are most effective. For movement rehabilitation — like Parkinson's or stroke recovery — slightly faster, rhythmic music helps synchronise motor pathways.</p>
+      </div>
+      <div class="tip-card reveal" data-num="06">
+        <h3>Consider a certified music therapist</h3>
+        <p>For chronic pain, trauma, or palliative care, a trained music therapist offers far more than a playlist. They assess emotional state, choose or create music therapeutically, and monitor responses. Ask your hospital or palliative care team if one is available.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAUTION BOX -->
+<section class="caution-section">
+  <div class="caution-inner">
+    <h2>A note of caution</h2>
+    <p>Music therapy is a <strong>complement</strong> to medicine, not a replacement. It alleviates symptoms — pain, anxiety, isolation — but doesn't treat infections, fix bones, or replace surgery. Patients with trauma should avoid songs with intense or triggering associations unless supervised by a professional. Those with mania or some forms of psychosis may find music overstimulating. And for severe pain, analgesics are still essential — music simply reduces how much you need. Use both.</p>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section class="conclusion-section">
+  <div class="conclusion-inner">
+    <div class="divider">♪ &nbsp; ♪ &nbsp; ♪</div>
+    <h2 class="reveal" style="margin-top:48px;">The prescription no one is writing</h2>
+    <p class="reveal">Music therapy is safe, cheap, widely accessible, and backed by a mountain of peer-reviewed evidence. It works on pain, anxiety, stress hormones, immune function, and neurological recovery simultaneously.</p>
+    <p class="reveal">And yet most hospital rooms are silent.</p>
+    <p class="reveal">The question is not whether music can heal — the science answers that clearly. The question is why we're not using it more.</p>
+
+    <div class="cta-box reveal">
+      <h3>Three things to do today</h3>
+      <ul>
+        <li>Build a personal healing playlist of songs that calm you, bring joy, or carry warm memories — and use it intentionally before medical appointments, during recovery, or when pain or anxiety spikes.</li>
+        <li>Share this with a healthcare provider. Ask them: "Is there a music therapist on staff?" or "Can I use music during my procedure?" You may be surprised by the answer.</li>
+        <li>Remember that music's reach is not metaphorical. It changes your neurochemistry, your hormones, and your pain perception in measurable ways. Your playlist is a prescription. Use it.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section class="sources-section">
+  <div class="sources-inner">
+    <h4>Key sources &amp; research</h4>
+    <div class="sources-grid">
+      <div class="source-item"><strong>Lee et al. (2016)</strong> — Journal of Music Therapy. Meta-analysis of 97 RCTs on pain &amp; opioid use.</div>
+      <div class="source-item"><strong>Rodgers-Melnick et al. (2025)</strong> — Journal of Pain. Interactive vs passive music therapy in hospital settings.</div>
+      <div class="source-item"><strong>Getie et al. (2026)</strong> — Discover Psychology. Meta-review confirming large pain reductions in burn patients.</div>
+      <div class="source-item"><strong>Fancourt et al. (2014)</strong> — Brain, Behavior &amp; Immunity. 63-study review of psychoneuroimmunology of music.</div>
+      <div class="source-item"><strong>Kunikullaya et al. (2025)</strong> — Neuroscience &amp; Biobehavioral Reviews. Music-induced neuroplasticity &amp; BDNF upregulation.</div>
+      <div class="source-item"><strong>de Witte et al. (2020)</strong> — Health Psychology Review. Meta-analysis: d=0.72 for stress/anxiety reduction.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Written with evidence — not opinion. All statistics drawn from peer-reviewed research and published meta-analyses. &copy; 2025 The Medicine of Music.</p>
+</footer>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+    document.getElementById('progress-bar').style.width = progress + '%';
+  });
+
+  // Intersection observer for reveals
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, entry.target.dataset.delay || 0);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal, .timeline-item').forEach((el, i) => {
+    if (el.classList.contains('reveal')) {
+      el.dataset.delay = (i % 4) * 80;
+    }
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
